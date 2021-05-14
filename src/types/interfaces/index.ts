@@ -10,6 +10,7 @@ export interface IProduct {
   numReviews: number;
   image: string;
   qty: number;
+  reviews: string[];
 }
 
 export interface IUser {

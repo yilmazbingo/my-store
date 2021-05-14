@@ -11,11 +11,11 @@ export function* fetchProductStart() {
   );
 }
 
-function* fetchProductsAsync() {
-  console.log("fetching products");
+function* fetchProductsAsync(action) {
+  console.log("actionpayload", action);
   try {
     const res: AxiosResponse<IProduct[]> = yield axios.get(
-      `${process.env.DJANGO_API_URL!}/api/products/`
+      `${process.env.DJANGO_API_URL!}/api/products?${action.payload}`
     );
     yield put(fetchProductSuccess(res.data));
   } catch (e) {

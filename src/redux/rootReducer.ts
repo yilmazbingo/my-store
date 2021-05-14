@@ -10,6 +10,7 @@ import { myOrderListReducer } from "./my-orders-list/reducer";
 import { userListReducer } from "./user-list/reducer";
 import { userUpdateReducer } from "./user-update/reducer";
 import { adminOrderListReducer } from "./admin-order-list/reducer";
+import { productReviewCreateReducer } from "./product-review/reducer";
 
 const rootReducer = combineReducers({
   productList: productListReducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   userList: userListReducer,
   userUpdate: userUpdateReducer,
   adminOrderList: adminOrderListReducer,
+  productReview: productReviewCreateReducer,
 });
 
 export default rootReducer;

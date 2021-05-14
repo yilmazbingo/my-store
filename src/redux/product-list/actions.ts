@@ -3,8 +3,11 @@ import { ProductListActionTypes } from "./action.types";
 import * as actions from "./types";
 // import { HYDRATE } from "next-redux-wrapper";
 
-export const fetchProductsStart = (): actions.IFetchProductsStart => ({
+export const fetchProductsStart = (
+  keyword: string
+): actions.IFetchProductsStart => ({
   type: ProductListActionTypes.PRODUCT_LIST_START,
+  payload: keyword,
 });
 
 export const fetchProductSuccess = (

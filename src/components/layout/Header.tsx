@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
+import SearchBox from "./SearchBox";
 import { RootState } from "@/redux/rootReducer";
 import { userLogoutStart } from "@/redux/user/user.actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,6 +25,7 @@ const Header = () => {
           <Navbar.Brand href="/">Bingology</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
+            <SearchBox />
             <Nav className="mr-auto">
               <Nav.Link href="/cart">
                 {" "}
