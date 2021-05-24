@@ -7,6 +7,8 @@ export interface IProductListState {
   loading: boolean;
   error: any;
   cart: IProduct[] | [];
+  page: number;
+  pages: number;
 }
 export interface IFetchProductsStart {
   type: ProductListActionTypes.PRODUCT_LIST_START;
@@ -15,7 +17,7 @@ export interface IFetchProductsStart {
 
 export interface IFetchProductSuccess {
   type: ProductListActionTypes.PRODUCT_LIST_SUCCESS;
-  payload: IProduct[];
+  payload: { products: IProduct[]; page: number; pages: number };
 }
 
 export interface IFetchProductFailure {
@@ -38,20 +40,6 @@ export interface IProductCreateFailure {
   payload: any;
 }
 
-export interface IProductUpdateStart {
-  type: ProductListActionTypes.PRODUCT_UPDATE_REQUEST_START;
-  payload: { id: string; data: any };
-}
-
-export interface IProductUpdateSuccess {
-  type: ProductListActionTypes.PRODUCT_UPDATE_SUCCESS;
-  payload: any;
-}
-
-export interface IProductUpdateFailure {
-  type: ProductListActionTypes.PRODUCT_UPDATE_FAILURE;
-  payload: any;
-}
 export interface IProductDeleteStart {
   type: ProductListActionTypes.PRODUCT_DELETE_START;
   payload: string;
@@ -81,8 +69,5 @@ export type Action =
   | IProductCreateStart
   | IProductCreateSuccess
   | IProductCreateFailure
-  | IProductUpdateStart
-  | IProductUpdateFailure
-  | IProductUpdateSuccess
   | END
   | Hydrate;

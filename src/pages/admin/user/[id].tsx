@@ -8,6 +8,8 @@ import { END } from "redux-saga";
 import { SagaStore, wrapper } from "@/redux/store";
 import Loader from "@/components/Loader";
 import Message from "@/components/Message";
+import BaseLayout from "@/components/layout/BaseLayout";
+import BasePage from "@/components/layout/Basepage";
 import FormContainer from "@/components/FormContainer";
 import {
   userUpdateRequestStart,
@@ -21,7 +23,7 @@ interface UserEditProps {
 
 const UserEdit = ({ paramsId }: UserEditProps): ReactElement => {
   const userId = paramsId;
-  console.log("userId", userId);
+  console.log("typeof user id", userId);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -38,78 +40,85 @@ const UserEdit = ({ paramsId }: UserEditProps): ReactElement => {
 
   useEffect(() => {
     if (!user?.name || user.id !== Number(userId)) {
-      dispatch(userDetailRequestStart(+userId));
+      dispatch(userDetailRequestStart(userId));
     } else {
       setName(user.name);
       setEmail(user.email);
       setIsAdmin(user.isAdmin);
     }
-  }, []);
+    console.log("user in useeffect", user);
+  }, [user]);
 
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(userUpdateRequestStart(user?.id, name, email, isAdmin));
+    dispatch(userUpdateRequestStart(userId, name, email, isAdmin));
   };
 
   return (
-    <div>
-      <Link href="/admin/userlist">Go Back</Link>
+    <BaseLayout>
+      <BasePage>
+        <Link href="/admin/userlist">Go Back</Link>
 
-      <FormContainer>
-        <h1>Edit User</h1>
-        {loadingUpdate && <Loader />}
-        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
+        <FormContainer>
+          <h1>Edit User</h1>
+          {loadingUpdate && <Loader />}
+          {errorUpdate && (
+            <Message variant="danger">
+              {errorUpdate && errorUpdate.message}
+            </Message>
+          )}
 
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Message variant="danger">{error}</Message>
-        ) : (
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="name"
-                placeholder="Enter name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Message variant="danger">{error}</Message>
+          ) : (
+            <Form onSubmit={submitHandler}>
+              <Form.Group controlId="name">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="name"
+                  placeholder="Enter name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-            <Form.Group controlId="email">
-              <Form.Label>Email Address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              <Form.Group controlId="email">
+                <Form.Label>Email Address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                ></Form.Control>
+              </Form.Group>
 
-            <Form.Group controlId="isadmin">
-              <Form.Check
-                type="checkbox"
-                label="Is Admin"
-                checked={isAdmin}
-                onChange={(e) => setIsAdmin(e.target.checked)}
-              ></Form.Check>
-            </Form.Group>
+              <Form.Group controlId="isadmin">
+                <Form.Check
+                  type="checkbox"
+                  label="Is Admin"
+                  checked={isAdmin}
+                  onChange={(e) => setIsAdmin(e.target.checked)}
+                ></Form.Check>
+              </Form.Group>
 
-            <Button type="submit" variant="primary">
-              Update
-            </Button>
-          </Form>
-        )}
-      </FormContainer>
-    </div>
+              <Button type="submit" variant="primary">
+                Update
+              </Button>
+            </Form>
+          )}
+        </FormContainer>
+      </BasePage>
+    </BaseLayout>
   );
 };
 
 export default UserEdit;
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   return { props: { paramsId: context?.params?.id } };
-// };
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return { props: { paramsId: context?.params?.id } };
+};
 
 // export const getServerSideProps = wrapper.getServerSideProps(
 //   async ({ store, params, req }) => {

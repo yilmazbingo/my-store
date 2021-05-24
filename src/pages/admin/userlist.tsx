@@ -7,6 +7,8 @@ import { Table, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "@/components/Loader";
 import Message from "@/components/Message";
+import BaseLayout from "@/components/layout/BaseLayout";
+import BasePage from "@/components/layout/Basepage";
 import { RootState } from "@/redux/rootReducer";
 import { userListStart, userDeleteStart } from "@/redux/user-list/actions";
 
@@ -43,63 +45,68 @@ const userList: React.FC<userListProps> = ({}) => {
   };
 
   return (
-    <div>
-      <h1>Users</h1>
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant="danger">{error}</Message>
-      ) : (
-        <Table striped bordered hover responsive className="table-sm">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>NAME</th>
-              <th>EMAIL</th>
-              <th>ADMIN</th>
-              <th></th>
-            </tr>
-          </thead>
+    <BaseLayout>
+      <BasePage>
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant="danger">{error}</Message>
+        ) : (
+          <Table striped bordered hover responsive className="table-sm">
+            <caption> Users </caption>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>EMAIL</th>
+                <th>ADMIN</th>
+                <th></th>
+              </tr>
+            </thead>
 
-          <tbody>
-            {users &&
-              users.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>
-                    {user.isAdmin ? (
-                      <i
-                        className="fas fa-check"
-                        style={{ color: "green" }}
-                      ></i>
-                    ) : (
-                      <i className="fas fa-check" style={{ color: "red" }}></i>
-                    )}
-                  </td>
+            <tbody>
+              {users &&
+                users.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.id}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>
+                      {user.isAdmin ? (
+                        <i
+                          className="fas fa-check"
+                          style={{ color: "green" }}
+                        ></i>
+                      ) : (
+                        <i
+                          className="fas fa-check"
+                          style={{ color: "red" }}
+                        ></i>
+                      )}
+                    </td>
 
-                  <td>
-                    <Link href={`/admin/user/${user.id}`}>
-                      <Button variant="light" className="btn-sm">
-                        <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
+                    <td>
+                      <Link href={`/admin/user/${user.id}`}>
+                        <Button variant="light" className="btn-sm">
+                          <FontAwesomeIcon icon={faEdit}></FontAwesomeIcon>
+                        </Button>
+                      </Link>
+
+                      <Button
+                        variant="danger"
+                        className="btn-sm"
+                        onClick={() => deleteHandler(String(user.id))}
+                      >
+                        <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                       </Button>
-                    </Link>
-
-                    <Button
-                      variant="danger"
-                      className="btn-sm"
-                      onClick={() => deleteHandler(user.id)}
-                    >
-                      <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
-      )}
-    </div>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        )}
+      </BasePage>
+    </BaseLayout>
   );
 };
 export default userList;

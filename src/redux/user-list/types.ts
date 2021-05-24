@@ -3,7 +3,7 @@ import { IUser } from "@/types/interfaces";
 
 export interface UserListState {
   loading: boolean;
-  userList: IUser[] | [];
+  userList: IUser[];
   error: any;
 }
 

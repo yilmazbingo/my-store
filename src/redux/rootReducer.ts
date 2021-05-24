@@ -11,6 +11,9 @@ import { userListReducer } from "./user-list/reducer";
 import { userUpdateReducer } from "./user-update/reducer";
 import { adminOrderListReducer } from "./admin-order-list/reducer";
 import { productReviewCreateReducer } from "./product-review/reducer";
+import { carouselProductsReducer } from "./products-carousel/reducer";
+import { productUpdateReducer } from "./product-update/reducer";
+import { productFetchReducer } from "./product-fetch/reducer";
 
 const rootReducer = combineReducers({
   productList: productListReducer,
@@ -25,6 +28,9 @@ const rootReducer = combineReducers({
   userUpdate: userUpdateReducer,
   adminOrderList: adminOrderListReducer,
   productReview: productReviewCreateReducer,
+  carouselProducts: carouselProductsReducer,
+  productUpdate: productUpdateReducer,
+  productDetail: productFetchReducer,
 });
 
 export default rootReducer;

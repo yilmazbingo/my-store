@@ -10,6 +10,8 @@ import { userLoginStart } from "@/redux/user/user.actions";
 import FormContainer from "@/components/FormContainer";
 import { ParsedUrlQuery } from "querystring";
 import { RootState } from "@/redux/rootReducer";
+import BaseLayout from "@/components/layout/BaseLayout";
+import BasePage from "@/components/layout/Basepage";
 
 interface loginProps {
   query: ParsedUrlQuery;
@@ -34,45 +36,49 @@ const login: React.FC<loginProps> = ({ query }) => {
   };
 
   return (
-    <FormContainer>
-      <h1>Sign In</h1>
-      {error && <Message variant="danger">{error.message}</Message>}
-      {loading && <Loader />}
-      <Form onSubmit={submitHandler}>
-        <FormGroup controlId="email">
-          <Form.Label> Email Address </Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          ></Form.Control>
-        </FormGroup>
+    <BaseLayout>
+      <BasePage>
+        <FormContainer>
+          <h1>Sign In</h1>
+          {error && <Message variant="danger">{error.message}</Message>}
+          {loading && <Loader />}
+          <Form onSubmit={submitHandler}>
+            <FormGroup controlId="email">
+              <Form.Label> Email Address </Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              ></Form.Control>
+            </FormGroup>
 
-        <FormGroup controlId="password">
-          <Form.Label> Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Enter Password"
-            value={password}
-            onChange={(e) => setpassword(e.target.value)}
-          ></Form.Control>
-        </FormGroup>
-        <Button type="submit" variant="primary">
-          Sign In
-        </Button>
-      </Form>
-      <Row className="py-3">
-        <Col>
-          New Customer ?{" "}
-          <Link
-            href={redirect ? `/register?redirect=${redirect}` : "/register"}
-          >
-            Register
-          </Link>
-        </Col>
-      </Row>
-    </FormContainer>
+            <FormGroup controlId="password">
+              <Form.Label> Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setpassword(e.target.value)}
+              ></Form.Control>
+            </FormGroup>
+            <Button type="submit" variant="primary">
+              Sign In
+            </Button>
+          </Form>
+          <Row className="py-3">
+            <Col>
+              New Customer ?{" "}
+              <Link
+                href={redirect ? `/register?redirect=${redirect}` : "/register"}
+              >
+                Register
+              </Link>
+            </Col>
+          </Row>
+        </FormContainer>
+      </BasePage>
+    </BaseLayout>
   );
 };
 export default login;

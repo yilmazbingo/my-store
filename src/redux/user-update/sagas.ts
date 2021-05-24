@@ -3,6 +3,7 @@ import axios from "axios";
 import { UserUpdateActionTypes } from "./action.types";
 import { userUpdateSuccess, userUpdateFailure } from "./actions";
 import { RootState } from "@/redux/rootReducer";
+import { IUserUpdateRequestStart } from "@/redux/user-update/types";
 import Router from "next/router";
 
 function* userUpdateStart() {
@@ -12,7 +13,8 @@ function* userUpdateStart() {
   );
 }
 
-function* userUpdateStartAsync(action) {
+function* userUpdateStartAsync(action: IUserUpdateRequestStart) {
+  console.log("Action in update", action);
   try {
     const getState = (state: RootState) => state.user;
     const { userInfo } = yield select(getState);
@@ -25,7 +27,7 @@ function* userUpdateStartAsync(action) {
 
     const { data } = yield axios.put(
       `${process.env.DJANGO_API_URL!}/api/users/update/${action.payload.id}/`,
-      action.payload.user,
+      action.payload,
       config
     );
     yield put(userUpdateSuccess(data));

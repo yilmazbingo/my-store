@@ -9,6 +9,8 @@ const INITIAL_STATE = {
   loading: false,
   error: null,
   cart: [],
+  page: 1,
+  pages: 1,
 };
 
 export const productListReducer = produce(
@@ -33,7 +35,9 @@ export const productListReducer = produce(
         return state;
       case ProductListActionTypes.PRODUCT_LIST_SUCCESS:
         state.loading = false;
-        state.products = action.payload;
+        state.products = action.payload.products;
+        state.page = action.payload.page;
+        state.pages = action.payload.pages;
         return state;
       case ProductListActionTypes.PRODUCT_DELETE_SUCCESS:
         state.products.filter((product) => product.id !== action.payload);

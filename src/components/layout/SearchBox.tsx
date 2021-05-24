@@ -4,13 +4,14 @@ import Router from "next/router";
 
 function SearchBox() {
   const [keyword, setKeyword] = useState("");
+  console.log("keyword in search bart", keyword);
 
   const submitHandler = (event: FormEvent) => {
-    console.log("router", Router);
-
     event.preventDefault();
     if (keyword) {
-      Router.push(`/?keyword=${keyword}&page=1`);
+      Router.push({ pathname: "", query: { keyword: keyword, page: 1 } });
+    } else if (keyword === "") {
+      Router.push({ pathname: "", query: { page: 1 } });
     } else {
       Router.push(Router.router?.asPath as string);
     }

@@ -10,11 +10,11 @@ import {
 export const userUpdateRequestStart = (
   id: string,
   name: string,
-  isAdmin: boolean,
-  email: string
+  email: string,
+  isAdmin: boolean
 ): IUserUpdateRequestStart => ({
   type: UserUpdateActionTypes.USER_UPDATE_REQUEST_START,
-  payload: { id, name, isAdmin, email },
+  payload: { id, name, email, isAdmin },
 });
 
 export const userUpdateSuccess = (user: IUser): IUserUpdateSuccess => ({

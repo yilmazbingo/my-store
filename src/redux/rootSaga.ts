@@ -13,6 +13,9 @@ import { adminOrderListSagas } from "./admin-order-list/sagas";
 import { userListSaga } from "./user-list/sagas";
 import { userUpdateSagas } from "./user-update/sagas";
 import { productReviewSagas } from "./product-review/sagas";
+import { productUpdateSaga } from "./product-update/saga";
+import { carouselProductsSaga } from "./products-carousel/saga";
+import { productFetchSaga } from "./product-fetch/saga";
 // all concurrently intializes all actions
 export default function* rootSaga() {
   // all tells the saga to run all sagas passed to it concurrently and wait for them all to complete
@@ -28,5 +31,8 @@ export default function* rootSaga() {
     call(userListSaga),
     call(userUpdateSagas),
     call(productReviewSagas),
+    call(carouselProductsSaga),
+    call(productUpdateSaga),
+    call(productFetchSaga),
   ]);
 }

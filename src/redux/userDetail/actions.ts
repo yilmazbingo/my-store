@@ -1,6 +1,6 @@
 import { UserDetailTypes } from "./actiontypes";
 
-export const userDetailRequestStart = (id: number) => ({
+export const userDetailRequestStart = (id: string) => ({
   type: UserDetailTypes.USER_DETAILS_START,
   payload: id,
 });
