@@ -11,8 +11,8 @@ const HeadTags: React.FC<HeadProps> = (props) => {
   const router = useRouter();
 
   const {
-    title = "Bingology Recycle Shop",
-    metaDescription = "Selling recycleable producs",
+    title = "Bingology Tech Shop",
+    metaDescription = "Selling tech producs",
     canonicalPath,
   } = props;
 
