@@ -42,7 +42,7 @@ const HeadTags: React.FC<HeadProps> = (props) => {
       <meta
         property="og:image"
         key="og:image"
-        content={`${process.env.BASE_URL}/images/frontend.jpeg`}
+        content={`${process.env.BASE_URL}/images/store.jpeg`}
       />
 
       {/* <link
