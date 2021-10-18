@@ -67,7 +67,9 @@ function ProductEditScreen({
   };
 
   const uploadFileHandler = async (e: React.FormEvent) => {
-    const file = e.target.files[0];
+    // const file = e.target.files[0];
+    const target = e.target as HTMLInputElement;
+    const file: File = (target.files as FileList)[0];
     const formData = new FormData();
 
     formData.append("image", file);
@@ -162,7 +164,8 @@ function ProductEditScreen({
               <Form.Group controlId="countinstock">
                 <Form.Label>Stock</Form.Label>
                 <Form.Control
-                  type="number"
+                  // type "number" adds leading zero
+                  type="tel"
                   placeholder="Enter stock"
                   value={countInStock}
                   onChange={(e) => setCountInStock(Number(e.target.value))}
@@ -202,8 +205,8 @@ function ProductEditScreen({
 
 export default ProductEditScreen;
 
-export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
-  async (context) => {
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps(async (context) => {
     const { store, params } = context;
     console.log("paramssssssssssss", params);
     store.dispatch(productFetchStart(params?.id as string));
@@ -212,5 +215,4 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     const state: RootState = store.getState();
     const productState = state.productDetail;
     return { props: { productId: params?.id, productState } };
-  }
-);
+  });

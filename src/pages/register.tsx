@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NextPageContext } from "next";
 import Router from "next/router";
 
-import { userRegisterStart } from "@/redux/user/user.actions";
+import { userRegisterStart } from "@/redux/user-register/action.creators";
 import FormContainer from "@/components/FormContainer";
 import { RootState } from "@/redux/rootReducer";
 interface registerProps {}
@@ -18,15 +18,16 @@ const register: React.FC<registerProps> = () => {
   const [password, setpassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
-  const redirect = Router.query.redirect ? Router.query.redirect : "";
-  const userState = useSelector((state: RootState) => state.user);
-  const { error, loading, userInfo } = userState;
+  // const redirect = Router.query.redirect ? Router.query.redirect : "";
+  const userState = useSelector((state: RootState) => state.userRegister);
+  const { error, loading, success } = userState;
+  console.log("error", error);
   const dispatch = useDispatch();
   // useEffect(() => {
-  //   if (userInfo) {
-  //     Router.push(`/${redirect}`);
+  //   if (success) {
+  //     Router.push("");
   //   }
-  // }, [userInfo]);
+  // }, [success, error, dispatch]);
 
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,7 +41,7 @@ const register: React.FC<registerProps> = () => {
     <FormContainer>
       <h1>Register</h1>
       {message && <Message variant="danger">{message}</Message>}
-      {error && <Message variant="danger">{error.message}</Message>}
+      {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <FormGroup controlId="name">
@@ -90,9 +91,10 @@ const register: React.FC<registerProps> = () => {
       <Row className="py-3">
         <Col>
           Have an account ?{" "}
-          <Link href={redirect ? `/login?redirect=${redirect}` : "/login"}>
+          {/* <Link href={redirect ? `/login?redirect=${redirect}` : "/login"}>
             Sign In
-          </Link>
+          </Link> */}
+          <Link href="/login">Sign In</Link>
         </Col>
       </Row>
     </FormContainer>

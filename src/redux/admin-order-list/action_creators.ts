@@ -6,14 +6,16 @@ import {
   IOrderDeliveredFailure,
   IOrderDeliveredSuccess,
   IOrderDeliveredRequestStart,
+  IOrder,
 } from "./types";
 
-export const adminOrderListRequestStart = (): IAdminOrderListRequestStartAction => ({
-  type: AdminOrderListTypes.ADMIN_ORDER_LIST_REQUEST_START,
-});
+export const adminOrderListRequestStart =
+  (): IAdminOrderListRequestStartAction => ({
+    type: AdminOrderListTypes.ADMIN_ORDER_LIST_REQUEST_START,
+  });
 
 export const adminOrderListSuccess = (
-  orders
+  orders: IOrder
 ): IAdminOrderListSuccessAction => ({
   type: AdminOrderListTypes.ADMIN_ORDER_LIST_SUCCESS,
   payload: orders,
@@ -33,7 +35,7 @@ export const orderDeliveredRequestStart = (
   payload: id,
 });
 
-export const orderDeliveredSuccess = (data): IOrderDeliveredSuccess => ({
+export const orderDeliveredSuccess = (data: any): IOrderDeliveredSuccess => ({
   type: AdminOrderListTypes.ORDER_DELIVER_SUCCESS,
   payload: data,
 });

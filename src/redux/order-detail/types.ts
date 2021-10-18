@@ -2,13 +2,29 @@ import { IUser } from "@/types/interfaces";
 import { OrderDetailActionTypes } from "./action.types";
 import { IShippingAddress } from "../cart/types";
 
-export interface IOrderItem {
+export interface IOrderDetail {
+  createdAt: string;
+  deliveredAt: string;
   id: string;
-  name: string;
-  price: number;
+  isDelivered: boolean;
+  isPaid: boolean;
+  orderItems: IOrderItem[];
+  paidAt: string;
+  paymentMethod: string;
+  shippingAddress: IShippingAddress;
+  shippingPrice: string;
+  taxPrice: string;
+  totalPrice: string;
+  user: { username: string; email: string };
+}
+
+export interface IOrderItem {
+  id: number;
   image: string;
-  product: number;
+  name: string;
   order: number;
+  price: string;
+  product: number;
   qty: number;
 }
 export type IOrderUser = Exclude<
@@ -16,12 +32,6 @@ export type IOrderUser = Exclude<
   "access" | "refresh" | "token" | "numReviews"
 >;
 
-export interface IOrderDetail {
-  id: string;
-  orderItems: IOrderItem[];
-  shippingAddress: IShippingAddress;
-  user: IOrderUser;
-}
 export interface IOrderDetailState {
   loading: boolean;
   orderDetail: IOrderDetail | null;
@@ -30,7 +40,7 @@ export interface IOrderDetailState {
 
 export interface IOrderDetailRequestStart {
   type: OrderDetailActionTypes.ORDER_DETAIL_REQUEST_START;
-  id: string;
+  payload: string;
 }
 
 export interface IOrderDetailRequestSuccess {

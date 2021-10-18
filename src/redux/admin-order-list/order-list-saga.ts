@@ -30,7 +30,7 @@ function* adminOrderListRequestAsync() {
       config
     );
     yield put(adminOrderListSuccess(data));
-  } catch (e) {
+  } catch (e: any) {
     yield put(adminOrderListFailure(e.message));
   }
 }

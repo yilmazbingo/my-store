@@ -13,7 +13,7 @@ export const productUpdateStart = (
   payload: { id, data },
 });
 
-export const productUpdateSuccess = (data): IProductUpdateSuccess => ({
+export const productUpdateSuccess = (data: any): IProductUpdateSuccess => ({
   type: ProductUpdateActionTypes.PRODUCT_UPDATE_SUCCESS,
   payload: data,
 });

@@ -13,7 +13,7 @@ export const userListStart = (): UserListRequestAction => ({
   type: UserListTypes.USER_LIST_REQUEST_START,
 });
 
-export const userListSuccess = (data): UserListSuccessAction => ({
+export const userListSuccess = (data: any): UserListSuccessAction => ({
   type: UserListTypes.USER_LIST_SUCCESS,
   payload: data,
 });

@@ -1,4 +1,7 @@
 /* carousel */
+.carousel {
+  background-color: "white";
+}
 .carousel-item-next,
 .carousel-item-prev,
 .carousel-item.active {
@@ -10,7 +13,13 @@
 }
 
 .carousel-caption h4 {
-  color: #fff;
+  color: white;
+  // color: rgb(6, 82, 6);
+}
+.carousel-control-prev,
+.carousel-control-next {
+  color: black;
+  background-color: black;
 }
 
 .carousel img {
@@ -24,6 +33,7 @@
 }
 .carousel a {
   margin: 0 auto;
+  color: "black";
 }
 @media (max-width: 900px) {
   .carousel-caption h2 {

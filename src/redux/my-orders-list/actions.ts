@@ -1,3 +1,4 @@
+import { IOrder } from "../admin-order-list/types";
 import { MyOrderListTypes } from "./action.types";
 import {
   IMyOrderListRequestStartAction,
@@ -9,7 +10,9 @@ export const myOrderListRequestStart = (): IMyOrderListRequestStartAction => ({
   type: MyOrderListTypes.MY_ORDER_LIST_REQUEST_START,
 });
 
-export const myOrderListSuccess = (orders): IMyOrderListSuccessAction => ({
+export const myOrderListSuccess = (
+  orders: IOrder
+): IMyOrderListSuccessAction => ({
   type: MyOrderListTypes.MY_ORDER_LIST_SUCCESS,
   payload: orders,
 });

@@ -1,6 +1,7 @@
 import { IUser } from "@/types/interfaces";
 import produce from "immer";
-import { UserDetailTypes } from "./actiontypes";
+import { UserDetailTypes } from "./action.types";
+import { Action } from "./types";
 
 interface UserDetail {
   loading: boolean;
@@ -15,7 +16,7 @@ const initialState = {
 };
 
 export const userDetailReducer = produce(
-  (state: UserDetail = initialState, action) => {
+  (state: UserDetail = initialState, action: Action) => {
     switch (action.type) {
       case UserDetailTypes.USER_DETAILS_SUCCESS:
         state.user = action.payload;

@@ -15,9 +15,9 @@ const Paginate = ({
   keyword = "",
   isAdmin = false,
 }: PaginateProps) => {
-  //   if (keyword) {
-  //     keyword = keyword.split("?keyword=")[1].split("&")[0];
-  //   }
+  if (keyword) {
+    keyword = keyword.split("?keyword=")[1].split("&")[0];
+  }
 
   return pages > 1 ? (
     <Pagination>

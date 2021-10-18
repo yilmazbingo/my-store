@@ -2,7 +2,7 @@ import React from "react";
 
 interface RatingProps {
   value: number;
-  text: string;
+  text?: string;
   color: string;
 }
 

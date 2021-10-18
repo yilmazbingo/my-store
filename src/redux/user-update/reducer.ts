@@ -1,6 +1,6 @@
 import produce from "immer";
-import { UserUpdateActionTypes, Action } from "./action.types";
-import { IUserUpdateState } from "./types";
+import { UserUpdateActionTypes } from "./action.types";
+import { IUserUpdateState, Action } from "./types";
 
 const initialState = {
   loading: false,

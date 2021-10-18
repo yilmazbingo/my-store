@@ -1,5 +1,6 @@
 import { takeLatest, put, call, select, all } from "redux-saga/effects";
 import { UserListTypes } from "./action.types";
+import { UserListRequestAction, UserDeleteStart } from "./types";
 import {
   userListSuccess,
   userListFailure,
@@ -36,12 +37,12 @@ function* userListStartAsync() {
     );
 
     yield put(userListSuccess(data));
-  } catch (e) {
+  } catch (e: any) {
     yield put(userListFailure(e.message));
   }
 }
 
-function* userDeleteStartAsync(action) {
+function* userDeleteStartAsync(action: UserDeleteStart) {
   try {
     const getUser = (state: RootState) => state.user;
     const { userInfo } = yield select(getUser);
@@ -57,7 +58,7 @@ function* userDeleteStartAsync(action) {
       config
     );
     yield put(userDeleteSuccess(action.payload));
-  } catch (e) {
+  } catch (e: any) {
     yield put(userDeleteFailure(e.message));
   }
 }

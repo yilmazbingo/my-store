@@ -3,6 +3,7 @@ import axios from "axios";
 import { OrderPayActionTypes } from "./action.types";
 import { orderPaySuccess, orderPayFailure, orderPayReset } from "./actions";
 import { RootState } from "../rootReducer";
+import { IOrderPayStart } from "./types";
 
 function* orderPayStart() {
   yield takeLatest(
@@ -11,7 +12,7 @@ function* orderPayStart() {
   );
 }
 
-function* orderPayStartAsync(action) {
+function* orderPayStartAsync(action: IOrderPayStart) {
   try {
     const getUser = (state: RootState) => state.user;
     let { userInfo } = yield select(getUser);
@@ -29,8 +30,8 @@ function* orderPayStartAsync(action) {
     );
     yield put(orderPaySuccess(data));
     yield put(orderPayReset());
-  } catch (e) {
-    yield put(orderPayFailure(e));
+  } catch (e: any) {
+    yield put(orderPayFailure(e.message));
   }
 }
 

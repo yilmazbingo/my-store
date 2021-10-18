@@ -1,8 +1,9 @@
 import { RootState } from "@/redux/rootReducer";
 import { call, takeLatest, put, all, select } from "redux-saga/effects";
 import axios from "axios";
-import { UserDetailTypes } from "./actiontypes";
+import { UserDetailTypes } from "./action.types";
 import { userDetailRequestSuccess, userDetailRequestFailure } from "./actions";
+import { IUserDetailRequestStart } from "./types";
 
 interface UserDetalRequestAction {
   type: UserDetailTypes.USER_DETAILS_START;
@@ -16,7 +17,7 @@ export function* userDetailRequestStart() {
   );
 }
 
-export function* onStartUserDetailRequest(action) {
+export function* onStartUserDetailRequest(action: IUserDetailRequestStart) {
   const getUser = (state: RootState) => state.user;
   let { userInfo } = yield select(getUser);
   console.log("userinfotoken", userInfo.token);
@@ -34,7 +35,7 @@ export function* onStartUserDetailRequest(action) {
     );
     console.log("data in saga", data);
     yield put(userDetailRequestSuccess(data));
-  } catch (e) {
+  } catch (e: any) {
     yield put(userDetailRequestFailure(e.message));
   }
 }

@@ -6,6 +6,7 @@ import {
   orderDeliveredFailure,
 } from "./action_creators";
 import { RootState } from "../rootReducer";
+import { IOrderDeliveredRequestStart } from "./types";
 export function* orderDeliverRequestStart() {
   takeLatest(
     AdminOrderListTypes.ORDER_DELIVER_REQUEST_START,
@@ -13,7 +14,7 @@ export function* orderDeliverRequestStart() {
   );
 }
 
-function* orderDeliveredRequestAsync(action) {
+function* orderDeliveredRequestAsync(action: IOrderDeliveredRequestStart) {
   try {
     const getState = (state: RootState) => state.user;
     const { userInfo } = yield select(getState);
@@ -30,7 +31,7 @@ function* orderDeliveredRequestAsync(action) {
       config
     );
     yield put(orderDeliveredSuccess(data));
-  } catch (error) {
+  } catch (error: any) {
     yield put(orderDeliveredFailure(error.message));
   }
 }

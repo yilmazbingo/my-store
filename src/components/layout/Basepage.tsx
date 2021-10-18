@@ -22,7 +22,12 @@ const BasePage: React.FC<BasePageProps> = (props) => {
       <HeadTags></HeadTags>
       <div
         className={`${pageType} ${className}`}
-        style={{ display: "flex", flexDirection: "column", flex: "1" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flex: "1",
+          minHeight: "50rem",
+        }}
       >
         <Wrapper>
           {header && <PageHeader header={header} />}

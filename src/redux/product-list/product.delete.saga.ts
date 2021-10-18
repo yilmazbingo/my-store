@@ -3,6 +3,7 @@ import { productDeleteSuccess, productDeleteFailur } from "./actions";
 import { takeLatest, put, all, select } from "redux-saga/effects";
 import axios from "axios";
 import { ProductListActionTypes } from "./action.types";
+import { IProductDeleteStart } from "./types";
 
 export function* productDeleteStart() {
   yield takeLatest(
@@ -11,8 +12,18 @@ export function* productDeleteStart() {
   );
 }
 
-function* productDeleteAsync(action) {
+function* productDeleteAsync(action: IProductDeleteStart) {
   try {
+    // const getState = (state: RootState) => state.user;
+    // const { userInfo } = yield select(getState);
+
+    // const config = {
+    //   headers: {
+    //     "Content-type": "application/json",
+    //     Authorization: `Bearer ${userInfo.token}`,
+    //   },
+    // };
+
     const getState = (state: RootState) => state.user;
     const { userInfo } = yield select(getState);
 
@@ -28,7 +39,7 @@ function* productDeleteAsync(action) {
       config
     );
     yield put(productDeleteSuccess(action.payload));
-  } catch (e) {
+  } catch (e: any) {
     yield put(productDeleteFailur(e.message));
   }
 }

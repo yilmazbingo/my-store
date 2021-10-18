@@ -17,7 +17,7 @@ function* productFetchAsync(action: IProductFetchStart) {
       `${process.env.DJANGO_API_URL!}/api/products/${action.payload}`
     );
     yield put(productFetchSuccess(data));
-  } catch (error) {
+  } catch (error: any) {
     yield put(productFetchFailure(error.message));
   }
 }

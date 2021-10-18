@@ -14,7 +14,7 @@ export const orderPayStart = (
   payload: { id, paymentResult },
 });
 
-export const orderPaySuccess = (data): IOrderPaySuccess => ({
+export const orderPaySuccess = (data: any): IOrderPaySuccess => ({
   type: OrderPayActionTypes.ORDER_PAY_SUCCESS,
   payload: data,
 });

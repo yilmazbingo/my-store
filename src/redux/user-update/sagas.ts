@@ -34,8 +34,8 @@ function* userUpdateStartAsync(action: IUserUpdateRequestStart) {
     if (typeof window !== "undefined") {
       Router.push("/admin/userlist");
     }
-  } catch (e) {
-    yield put(userUpdateFailure(e));
+  } catch (e: any) {
+    yield put(userUpdateFailure(e.message));
   }
 }
 

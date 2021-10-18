@@ -4,7 +4,8 @@ import Loader from "../Loader";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { Crop } from "react-image-crop";
-
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/rootReducer";
 import { blobToFile, getCroppedImg } from "@/helpers/functions";
 import ImageCrop from "./ImageCrop";
 // import "./FileLoader.scss";
@@ -27,38 +28,54 @@ enum ImageStatus {
   UPLOADED = "UPLOADED",
   INIT = "INIT",
 }
-const FileLoader = ({ onFileUpload }) => {
+
+const FileLoader = ({
+  onFileUpload,
+}: {
+  onFileUpload: (url: string) => void;
+}) => {
+  // console.log("onFileupload", onFileUpload);
+  // we need the image to be passed to cropped image
   const inputRef = useRef(null);
   const [croppedImg, setCroppedImg] = useState<Blob | null>(null);
   const [selectedImg, setSelectedImg] = useState<ImageSnippet | null>(null);
   const [imgStatus, setImageStatus] = useState<ImageStatus>(ImageStatus.INIT);
-  const [originalImage, setOriginalImage] = useState(null);
+  const [originalImage, setOriginalImage] = useState<HTMLImageElement | null>(
+    null
+  );
+  // console.log("cropped image", croppedImg);
+  const [imgBase64, setImgBase64] = useState<
+    string | ArrayBuffer | null | undefined
+  >("");
+  const { userInfo } = useSelector((state: RootState) => state.user);
 
+  // The FileReader object lets web applications asynchronously read the contents of files
   let fileReader: FileReader;
-
   useEffect(() => {
     fileReader = new FileReader();
+    fileReader.addEventListener("load", (event) => {
+      setImgBase64(event?.target?.result);
+    });
   });
 
-  const uploadFileHandler = async (image: File) => {
+  const uploadImage = async (image: File) => {
     // const target = e.target as HTMLInputElement;
     // const file: File = (target.files as FileList)[0];
     const formData = new FormData();
-
     formData.append("image", image);
-    formData.append("product_id", "1");
-    console.log("uploaded image", image);
+    // formData.append("product_id", "1");
     // setUploading(true);
 
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${userInfo?.token}`,
       },
     };
 
     return axios
       .post(
-        `${process.env.DJANGO_API_URL!}/api/products/upload/`,
+        `${process.env.DJANGO_API_URL!}/api/products/upload-image/`,
         formData,
         config
       )
@@ -67,44 +84,60 @@ const FileLoader = ({ onFileUpload }) => {
     //   setImage(data);
     //   setUploading(false);
   };
+
+  //                            this is fired when button is clicked
   const handleImageUpload = () => {
     changeImageStatus(ImageStatus.PENDING);
-    console.log("Cropped image", croppedImg);
-    const imageToUpload = blobToFile(croppedImg);
+
+    const imageToUpload = blobToFile(croppedImg as Blob);
+
+    console.log("imageToUpload", imageToUpload);
     //  i gotta do handle error
     if (!imageToUpload) {
       return;
     }
-    console.log("imageToUpload", imageToUpload);
-    uploadFileHandler(imageToUpload)
+    // console.log("imageToUpload", imageToUpload);
+    uploadImage(imageToUpload)
       .then((uploadedImage) => {
+        console.log("uploadedImage", uploadedImage);
         onFileUpload(uploadedImage);
         changeImageStatus(ImageStatus.UPLOADED);
       })
-      .catch(() => {
+      .catch((E) => {
+        console.log("eerror in image uplaod", E);
         changeImageStatus(ImageStatus.ERROR);
       });
   };
 
-  const handleImageLoad = (image) => setOriginalImage(image);
+  const handleImageLoad = (image: HTMLImageElement) => setOriginalImage(image);
 
   const handleCropComplete = async (crop: Crop) => {
     if (!originalImage) {
       return;
     }
-    let croppedImg: string = "";
+    let croppedImg: Blob | null = null;
     if (typeof window !== "undefined") {
-      console.log("CroppedImg", croppedImg);
-      croppedImg = await getCroppedImg(originalImage, crop, selectedImg.name);
+      // console.log("CroppedImg", croppedImg);
+      try {
+        croppedImg = await getCroppedImg(
+          originalImage,
+          crop,
+          selectedImg?.name as string
+        );
+      } catch (e) {
+        console.log("errror in getting cropped img", e);
+      }
+
       console.log("Cropped img", croppedImg);
-      console.log("Cropperdimg", croppedImg);
       setCroppedImg(croppedImg);
     }
   };
 
   const handleChange = (event: React.ChangeEvent) => {
+    // to display the image we need to get the base64 representation
     const target = event.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
+    // console.log("file in handlechange", file);
     //  fileloader reading the file
     fileReader.onloadend = (event) => {
       const selectedImg = new ImageSnippet(
@@ -115,9 +148,9 @@ const FileLoader = ({ onFileUpload }) => {
       setSelectedImg(selectedImg);
       setImageStatus(ImageStatus.LOADED);
     };
-
+    // this will fire "load" event which will contain base64 for represention of the image
     fileReader.readAsDataURL(file);
-    console.log("filereader", fileReader);
+    // console.log("filereader", fileReader);
   };
 
   const cancelImage = () => {
@@ -146,15 +179,16 @@ const FileLoader = ({ onFileUpload }) => {
 
       <Form.Group controlId="image">
         <Form.Label>Image</Form.Label>
-        <Form.Control
+        {/* <Form.Control
           ref={inputRef}
           type="text"
           placeholder="Enter image"
           //   value={image}
           onChange={handleChange}
-        ></Form.Control>
+        ></Form.Control> */}
 
         <Form.File
+          ref={inputRef}
           id="image-file"
           accept=".jpg, .png, .jpeg"
           label="Choose File"
@@ -170,11 +204,13 @@ const FileLoader = ({ onFileUpload }) => {
           onImageLoaded={handleImageLoad}
         />
       )}
+      {/* we are diplaying the image from the base64 representation */}
       {selectedImg && (
         <>
           <div className="img-preview-container mb-2">
             <div className="img-preview">
               <img
+                // @ts-ignore
                 src={(croppedImg && croppedImg.url) || selectedImg.src}
                 alt=""
               ></img>

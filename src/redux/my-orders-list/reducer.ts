@@ -1,22 +1,22 @@
 import produce from "immer";
 import { MyOrderListTypes } from "./action.types";
-import { Action } from "./types";
+import { Action, IMyOrderListState } from "./types";
 
 const initialState = {
   error: null,
-  orders: [],
+  ordersList: [],
   loading: false,
 };
 
 export const myOrderListReducer = produce(
-  (state = initialState, action: Action) => {
+  (state: IMyOrderListState = initialState, action: Action) => {
     switch (action.type) {
       case MyOrderListTypes.MY_ORDER_LIST_REQUEST_START:
         state.loading = true;
         return state;
       case MyOrderListTypes.MY_ORDER_LIST_SUCCESS:
         state.loading = false;
-        state.orders = action.payload;
+        state.ordersList = action.payload;
         return state;
       case MyOrderListTypes.MY_ORDER_LIST_FAILURE:
         state.loading = false;

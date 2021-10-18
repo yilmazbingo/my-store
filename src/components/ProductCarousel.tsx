@@ -24,7 +24,7 @@ function ProductCarousel() {
   ) : error ? (
     <Message variant="danger">{error}</Message>
   ) : (
-    <Carousel pause="hover" className="bg-dark">
+    <Carousel pause="hover" className="carousel">
       {products.map((product) => (
         <Carousel.Item key={product.id}>
           <Link href={`/product/${product.id}`}>
@@ -32,7 +32,7 @@ function ProductCarousel() {
               <Image src={product.image} alt={product.name} fluid />
               <Carousel.Caption className="carousel.caption">
                 <h4>
-                  {product.name} (${product.price})
+                  {product.name} ( ${product.price})
                 </h4>
               </Carousel.Caption>
             </>

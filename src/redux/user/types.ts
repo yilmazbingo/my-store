@@ -1,13 +1,7 @@
-import { IUserLoginFailure } from "./types";
+// import { IUserLoginFailure } from "./types";
 import { IUser } from "@/types/interfaces";
 import { UserActionTypes } from "./user.types";
 export interface LoginCredentials {
-  email: string;
-  password: string;
-}
-
-export interface RegisterCredentials {
-  name: string;
   email: string;
   password: string;
 }
@@ -47,21 +41,6 @@ export interface IUserLogoutFailure {
   payload: any;
 }
 
-export interface IUserRegisterStart {
-  type: UserActionTypes.USER_REGISTER_START;
-  payload: RegisterCredentials;
-}
-
-export interface IUserRegisterSuccess {
-  type: UserActionTypes.USER_REGISTER_SUCCESS;
-  payload: IUser;
-}
-
-export interface IUserRegisterFailure {
-  type: UserActionTypes.USER_REGISTER_FAILURE;
-  payload: any;
-}
-
 export interface IUserProfileUpdateStart {
   type: UserActionTypes.USER_UPDATE_REQUEST_START;
   payload: UpdateCredentials;
@@ -87,9 +66,6 @@ export type Action =
   | IUserLogoutStart
   | IUserLogoutSuccess
   | IUserLogoutFailure
-  | IUserRegisterStart
-  | IUserRegisterSuccess
-  | IUserRegisterFailure
   | IUserProfileUpdateStart
   | IUserProfileUpdateSuccess
   | IUserProfileUpdateFailure

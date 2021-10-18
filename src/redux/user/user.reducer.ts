@@ -35,7 +35,6 @@ export const userLoginReducer = produce(
         state.userInfo = user;
         return state;
       case UserActionTypes.USER_UPDATE_REQUEST_START:
-      case UserActionTypes.USER_REGISTER_START:
       case UserActionTypes.USER_LOGIN_START:
         state.loading = true;
         return state;
@@ -49,7 +48,6 @@ export const userLoginReducer = produce(
         state.loading = false;
         return state;
       case UserActionTypes.USER_UPDATE_FAILURE:
-      case UserActionTypes.USER_REGISTER_FAILURE:
       case UserActionTypes.USER_LOGIN_FAILURE:
         state.error = action.payload;
         state.loading = false;

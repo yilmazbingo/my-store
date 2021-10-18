@@ -6,7 +6,6 @@ import { savePaymentMethod } from "@/redux/cart/cart.actions";
 import FormContainer from "@/components/FormContainer";
 import { RootState } from "@/redux/rootReducer";
 import CheckoutSteps from "@/components/CheckoutSteps";
-import { IShippingAddress } from "@/redux/cart/types";
 import BaseLayout from "@/components/layout/BaseLayout";
 import BasePage from "@/components/layout/Basepage";
 

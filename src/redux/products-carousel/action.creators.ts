@@ -5,12 +5,13 @@ import {
   CarouselProductsRequestFailure,
 } from "./types";
 
-export const carouselProductsRequestStart = (): CarouselProductsRequestStart => ({
-  type: CarouselProductsActionTypes.CAROUSEL_PRODUCTS_REQUEST_START,
-});
+export const carouselProductsRequestStart =
+  (): CarouselProductsRequestStart => ({
+    type: CarouselProductsActionTypes.CAROUSEL_PRODUCTS_REQUEST_START,
+  });
 
 export const carouselProductsRequestSuccess = (
-  data
+  data: any
 ): CarouselProductsRequestSuccess => ({
   type: CarouselProductsActionTypes.CAROUSEL_PRODUCTS_SUCCESS,
   payload: data,

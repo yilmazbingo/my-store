@@ -4,12 +4,13 @@ import { OrderCreateActionTypes } from "./action.types";
 import { orderCreateSuccess, orderCreateFailure, orderReset } from "./actions";
 import { clearCartItems } from "../cart/cart.actions";
 import { RootState } from "../rootReducer";
+import { OrderCreateStart } from "./types";
 
 function* orderCreateStart() {
   yield takeLatest(OrderCreateActionTypes.ORDER_CREATE_START, orderCreateAsync);
 }
 
-function* orderCreateAsync(action) {
+function* orderCreateAsync(action: OrderCreateStart) {
   try {
     const getUser = (state: RootState) => state.user;
     let { userInfo } = yield select(getUser);
@@ -28,8 +29,9 @@ function* orderCreateAsync(action) {
 
     yield put(orderCreateSuccess(data));
     yield put(orderReset());
+    // @ts-ignore
     yield put(clearCartItems());
-  } catch (e) {
+  } catch (e: any) {
     yield put(orderCreateFailure(e.message));
   }
 }

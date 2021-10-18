@@ -3,6 +3,8 @@ import axios from "axios";
 import { ProductReviewActionTypes } from "./action.types";
 import { productReviewSuccess, productReviewFailure } from "./action.creators";
 import { RootState } from "../rootReducer";
+import { IProductReviewRequest } from "./types";
+import Router from "next/router";
 
 function* productReviewStart() {
   yield takeLatest(
@@ -11,7 +13,7 @@ function* productReviewStart() {
   );
 }
 
-function* productReviewStartAsync(action) {
+function* productReviewStartAsync(action: IProductReviewRequest) {
   try {
     const getUser = (state: RootState) => state.user;
     const { userInfo } = yield select(getUser);
@@ -33,7 +35,8 @@ function* productReviewStartAsync(action) {
     console.log("before review success");
     yield put(productReviewSuccess());
     console.log("after review success");
-  } catch (error) {
+    Router.reload();
+  } catch (error: any) {
     yield put(productReviewFailure(error.message));
   }
 }

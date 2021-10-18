@@ -27,7 +27,7 @@ function* myOrderListRequestAsync() {
       config
     );
     yield put(myOrderListSuccess(data));
-  } catch (e) {
+  } catch (e: any) {
     yield put(myOrderListFailure(e.message));
   }
 }

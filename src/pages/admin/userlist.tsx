@@ -21,14 +21,15 @@ const userList: React.FC<userListProps> = ({}) => {
 
   const userListState = useSelector((state: RootState) => state.userList);
   const { loading, error, userList: users } = userListState;
-  console.log("ssds", users);
   const userState = useSelector((state: RootState) => state.user);
   const { userInfo } = userState;
+  console.log("userinfo", userInfo);
 
   //   const userDelete = useSelector((state) => state.userDelete);
   //   const { success: successDelete } = userDelete;
 
   useEffect(() => {
+    console.log("userIngo", userInfo);
     if (userInfo && userInfo.isAdmin) {
       dispatch(userListStart());
     } else {
@@ -47,13 +48,14 @@ const userList: React.FC<userListProps> = ({}) => {
   return (
     <BaseLayout>
       <BasePage>
+        <h1>Users</h1>
         {loading ? (
           <Loader />
         ) : error ? (
           <Message variant="danger">{error}</Message>
         ) : (
           <Table striped bordered hover responsive className="table-sm">
-            <caption> Users </caption>
+            {/* <caption> Users </caption> */}
             <thead>
               <tr>
                 <th>ID</th>

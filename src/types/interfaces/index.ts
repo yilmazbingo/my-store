@@ -10,7 +10,16 @@ export interface IProduct {
   numReviews: number;
   image: string;
   qty: number;
-  reviews: string[];
+  reviews: Review[];
+}
+
+interface Review {
+  id: string;
+  user: string;
+  name: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
 }
 
 export interface IUser {

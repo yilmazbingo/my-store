@@ -17,8 +17,8 @@ export interface IShippingAddress {
   city: string;
   postalCode: string;
   country: string;
-  orderId: number;
-  shippingPrice: number | null;
+  orderId?: number;
+  shippingPrice?: number | null;
 }
 
 export type CartProduct = Exclude<
@@ -33,5 +33,5 @@ export interface RemoveItem {
 
 export interface SaveShippingAddress {
   type: string;
-  payload: ShippingAddress;
+  payload: IShippingAddress;
 }

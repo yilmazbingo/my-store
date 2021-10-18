@@ -19,7 +19,8 @@ function* fetchProductsAsync(action: IFetchProductsStart) {
     );
 
     yield put(fetchProductSuccess(res.data));
-  } catch (e) {
+    console.log("fetched");
+  } catch (e: any) {
     console.log("error in fetching", e);
     yield put(
       fetchProductFailure(

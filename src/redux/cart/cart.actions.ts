@@ -6,67 +6,66 @@ import {
   CartProduct,
   RemoveItem,
   SaveShippingAddress,
-  ShippingAddress,
+  IShippingAddress,
 } from "./types";
 
-export const addToCart = (id: number, qty: number): any => async (
-  dispatch: Dispatch,
-  getState: () => RootState
-) => {
-  try {
-    const { data } = await axios.get(`/api/product/${id}`);
+export const addToCart =
+  (id: number, qty: number): any =>
+  async (dispatch: Dispatch, getState: () => RootState) => {
+    try {
+      const { data } = await axios.get(`/api/product/${id}`);
 
-    dispatch({
-      type: CartActionTypes.CARD_ADD_ITEM,
-      payload: {
-        id: data.data.id,
-        name: data.data.name,
-        image: data.data.image,
-        price: data.data.price,
-        countInStock: data.data.countInStock,
-        qty,
-      },
-    });
-    if (typeof window !== undefined) {
-      localStorage.setItem(
-        "cartItems",
-        JSON.stringify(getState().cart.cartItems)
-      );
+      dispatch({
+        type: CartActionTypes.CARD_ADD_ITEM,
+        payload: {
+          id: data.data.id,
+          name: data.data.name,
+          image: data.data.image,
+          price: data.data.price,
+          countInStock: data.data.countInStock,
+          qty,
+        },
+      });
+      if (typeof window !== undefined) {
+        localStorage.setItem(
+          "cartItems",
+          JSON.stringify(getState().cart.cartItems)
+        );
+      }
+    } catch (e) {
+      console.log(e);
     }
-  } catch (e) {
-    console.log(e);
-  }
-};
+  };
 
 export const removeItem = (item: CartProduct): RemoveItem => ({
   type: CartActionTypes.CARD_REMOVE_ITEM,
   payload: item,
 });
 
-export const removeFromCart = (id: number) => (
-  dispatch: Dispatch,
-  getState: () => RootState
-) => {
-  dispatch({
-    type: CartActionTypes.CARD_REMOVE_ITEM,
-    payload: id,
-  });
+export const removeFromCart =
+  (id: number) => (dispatch: Dispatch, getState: () => RootState) => {
+    dispatch({
+      type: CartActionTypes.CARD_REMOVE_ITEM,
+      payload: id,
+    });
 
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
-};
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify(getState().cart.cartItems)
+    );
+  };
 
-export const saveShippingAddress = (data: ShippingAddress) => (
-  dispatch: Dispatch<SaveShippingAddress>
-) => {
-  dispatch({
-    type: CartActionTypes.CART_SAVE_SHIPPING_ADDRESS,
-    payload: data,
-  });
+export const saveShippingAddress =
+  (data: IShippingAddress) => (dispatch: Dispatch<SaveShippingAddress>) => {
+    dispatch({
+      type: CartActionTypes.CART_SAVE_SHIPPING_ADDRESS,
+      payload: data,
+    });
 
-  localStorage.setItem("shippingAddress", JSON.stringify(data));
-};
+    localStorage.setItem("shippingAddress", JSON.stringify(data));
+  };
 
-export const savePaymentMethod = (data) => (dispatch: Dispatch) => {
+export const savePaymentMethod = (data: any) => (dispatch: Dispatch) => {
   dispatch({
     type: CartActionTypes.CART_SAVE_PAYMENT_METHOD,
     payload: data,

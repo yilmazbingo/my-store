@@ -7,12 +7,10 @@ import {
   userLoginFailure,
   userLogoutSuccess,
   userLogoutFailure,
-  userRegisterSuccess,
-  userRegisterFailure,
   userProfileUpdateSuccess,
   userProfileUpdateFailure,
 } from "./user.actions";
-import { LoginCredentials, RegisterCredentials } from "./types";
+import { IUserProfileUpdateStart, LoginCredentials } from "./types";
 import { myOrderListReset } from "../my-orders-list/actions";
 import { userListReset } from "../user-list/actions";
 import { IUser } from "@/types/interfaces";
@@ -23,10 +21,6 @@ interface StartSignInAction {
   payload: LoginCredentials;
 }
 
-interface StartRegisterAction {
-  type: UserActionTypes.USER_REGISTER_START;
-  payload: RegisterCredentials;
-}
 // the action that we are catching from here will be passed on startSign
 export function* userLoginStart() {
   yield takeLatest(UserActionTypes.USER_LOGIN_START, onStartSignin);
@@ -34,10 +28,6 @@ export function* userLoginStart() {
 
 export function* userLogoutStart() {
   yield takeLatest(UserActionTypes.USER_LOGOUT_START, onStartLogout);
-}
-
-export function* userRegisterStart() {
-  yield takeLatest(UserActionTypes.USER_REGISTER_START, onRegisterStart);
 }
 
 export function* userUpdateStart() {
@@ -64,6 +54,7 @@ export function* onStartSignin(action: StartSignInAction) {
     yield put(userLoginSuccess(data));
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (e) {
+    console.log("error in loging", e);
     yield put(userLoginFailure(e));
   }
 }
@@ -77,31 +68,12 @@ export function* onStartLogout() {
       yield put(userListReset());
       Router.push("/");
     }
-  } catch (e) {
+  } catch (e: any) {
     yield put(userLogoutFailure(e.message));
   }
 }
 
-export function* onRegisterStart(action: StartRegisterAction) {
-  const { name, email, password } = action.payload;
-
-  try {
-    const config = { headers: { "Content-type": "application/json" } };
-    const { data } = yield axios.post(
-      `${process.env.DJANGO_API_URL!}/api/users/register/`,
-      { name, email, password },
-      config
-    );
-    console.log("data", data);
-    yield put(userRegisterSuccess(data));
-    yield put(userLoginSuccess(data));
-    Router.push("/");
-  } catch (e) {
-    yield put(userRegisterFailure(e.message));
-  }
-}
-
-export function* onProfileUpdateStart(action) {
+export function* onProfileUpdateStart(action: IUserProfileUpdateStart) {
   const getUser = (state: RootState) => state.user;
   let { userInfo } = yield select(getUser);
   try {
@@ -121,7 +93,7 @@ export function* onProfileUpdateStart(action) {
     if (typeof window !== undefined) {
       localStorage.setItem("userInfo", JSON.stringify(data));
     }
-  } catch (e) {
+  } catch (e: any) {
     yield put(userProfileUpdateFailure(e.message));
   }
 }
@@ -130,7 +102,6 @@ export function* userSagas() {
   yield all([
     call(userLoginStart),
     call(userLogoutStart),
-    call(userRegisterStart),
     call(userUpdateStart),
   ]);
 }

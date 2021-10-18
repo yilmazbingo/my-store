@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import ReactCrop, { Crop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 
-const ImageCrop = ({ src, onImageLoaded, onCropComplete }) => {
+interface ImageCropProps {
+  src: string;
+  onImageLoaded: (image: HTMLImageElement) => void;
+  onCropComplete: (crop: Crop) => Promise<void>;
+}
+
+const ImageCrop = ({ src, onImageLoaded, onCropComplete }: ImageCropProps) => {
   const [crop, setCrop] = useState<Crop>({
     unit: "%", // default, can be 'px' or '%'
     x: 0,

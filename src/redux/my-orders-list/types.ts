@@ -1,9 +1,33 @@
 import { MyOrderListTypes } from "./action.types";
 
+interface ShippingAddress {
+  id: number;
+  address: string;
+  city: string;
+  country: string;
+  order: number;
+  postalCode: number;
+  shippingPrice: number | null;
+}
+interface Order {
+  id: number;
+  deliveredAt: Date | null;
+  isDelivered: boolean;
+  isPaid: boolean;
+  orderItems: any;
+  paidAt: string | null;
+  paymentMethod: string;
+  shippingAddress: ShippingAddress;
+  shippingPrice: number;
+  taxPrice: number;
+  totalPrice: number;
+  user: { username: string; email: string };
+}
+
 export interface IMyOrderListState {
   loading: boolean;
   error: any;
-  ordersList: any;
+  ordersList: Order[];
 }
 
 export interface IMyOrderListRequestStartAction {

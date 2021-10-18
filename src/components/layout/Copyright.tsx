@@ -11,9 +11,10 @@ const Copyright = () => {
         bottom: "0",
         position: "fixed",
         width: "100%",
+        zIndex: 100,
       }}
     >
-      <h4>
+      <h4 style={{ color: "white", marginTop: "auto" }}>
         Copyrigth{" "}
         <span>
           {" "}

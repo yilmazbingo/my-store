@@ -1,6 +1,6 @@
 import produce from "immer";
 import { AdminOrderListTypes } from "./action.types";
-import { Action } from "./types";
+import { Action, IMyOrderListState } from "./types";
 
 const initialState = {
   error: null,
@@ -9,7 +9,7 @@ const initialState = {
 };
 
 export const adminOrderListReducer = produce(
-  (state = initialState, action: Action) => {
+  (state: IMyOrderListState = initialState, action: Action) => {
     switch (action.type) {
       case AdminOrderListTypes.ADMIN_ORDER_LIST_REQUEST_START:
       case AdminOrderListTypes.ORDER_DELIVER_REQUEST_START:
@@ -20,7 +20,7 @@ export const adminOrderListReducer = produce(
         state.orders = action.payload;
         return state;
       case AdminOrderListTypes.ORDER_DELIVER_SUCCESS:
-        const index = state.products.findIndex(
+        const index = state.orders.findIndex(
           (order) => order.id === action.payload.id
         );
         if (index !== -1) state.orders[index] = action.payload;

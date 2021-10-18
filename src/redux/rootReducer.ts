@@ -14,6 +14,7 @@ import { productReviewCreateReducer } from "./product-review/reducer";
 import { carouselProductsReducer } from "./products-carousel/reducer";
 import { productUpdateReducer } from "./product-update/reducer";
 import { productFetchReducer } from "./product-fetch/reducer";
+import { userRegisterReducer } from "./user-register/user-register-reducer";
 
 const rootReducer = combineReducers({
   productList: productListReducer,
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   carouselProducts: carouselProductsReducer,
   productUpdate: productUpdateReducer,
   productDetail: productFetchReducer,
+  userRegister: userRegisterReducer,
 });
 
 export default rootReducer;

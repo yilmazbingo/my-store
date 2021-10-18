@@ -4,7 +4,7 @@ import * as actions from "./types";
 // import { HYDRATE } from "next-redux-wrapper";
 
 export const fetchProductsStart = (
-  queryParams: string
+  queryParams: string = ""
 ): actions.IFetchProductsStart => ({
   type: ProductListActionTypes.PRODUCT_LIST_START,
   payload: queryParams,
@@ -14,6 +14,7 @@ export const fetchProductSuccess = (
   products: IProduct[]
 ): actions.IFetchProductSuccess => ({
   type: ProductListActionTypes.PRODUCT_LIST_SUCCESS,
+  //@ts-ignore
   payload: products,
 });
 
@@ -25,13 +26,15 @@ export const fetchProductFailure = (
 });
 
 export const createProductStart = (
-  productData
+  productData: any
 ): actions.IProductCreateStart => ({
   type: ProductListActionTypes.PRODUCT_CREATE_REQUEST_START,
   payload: productData,
 });
 
-export const createProductSuccess = (data): actions.IProductCreateSuccess => ({
+export const createProductSuccess = (
+  data: any
+): actions.IProductCreateSuccess => ({
   type: ProductListActionTypes.PRODUCT_CREATE_SUCCESS,
   payload: data,
 });

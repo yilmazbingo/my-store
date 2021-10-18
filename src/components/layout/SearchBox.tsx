@@ -4,7 +4,7 @@ import Router from "next/router";
 
 function SearchBox() {
   const [keyword, setKeyword] = useState("");
-  console.log("keyword in search bart", keyword);
+  console.log("keyword value for searchin", keyword);
 
   const submitHandler = (event: FormEvent) => {
     event.preventDefault();

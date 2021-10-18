@@ -24,13 +24,14 @@ export const productListReducer = produce(
             : [];
         }
         state.cart = cartItemsFromStorage;
+        //@ts-ignore
         state.products = action.payload;
         return state;
 
       case ProductListActionTypes.PRODUCT_LIST_START:
       case ProductListActionTypes.PRODUCT_DELETE_START:
       case ProductListActionTypes.PRODUCT_CREATE_REQUEST_START:
-      case ProductListActionTypes.PRODUCT_UPDATE_REQUEST_START:
+        // case ProductListActionTypes.PRODUCT_UPDATE_REQUEST_START:
         state.loading = true;
         return state;
       case ProductListActionTypes.PRODUCT_LIST_SUCCESS:
@@ -40,24 +41,27 @@ export const productListReducer = produce(
         state.pages = action.payload.pages;
         return state;
       case ProductListActionTypes.PRODUCT_DELETE_SUCCESS:
+        state.loading = false;
+
         state.products.filter((product) => product.id !== action.payload);
         state.cart.filter((product) => product.id !== action.payload);
         return state;
 
       case ProductListActionTypes.PRODUCT_CREATE_SUCCESS:
+        state.loading = false;
         state.products.push(action.payload);
         return state;
 
-      case ProductListActionTypes.PRODUCT_UPDATE_SUCCESS:
-        const index = state.products.findIndex(
-          (product) => product.id === action.payload.id
-        );
-        if (index !== -1) state.products[index] = action.payload;
-        return state;
+      // case ProductListActionTypes.pro:
+      //   const index = state.products.findIndex(
+      //     (product) => product.id === action.payload.id
+      //   );
+      //   if (index !== -1) state.products[index] = action.payload;
+      //   return state;
       case ProductListActionTypes.PRODUCT_LIST_FAILURE:
       case ProductListActionTypes.PRODUCT_DELETE_FAILURE:
       case ProductListActionTypes.PRODUCT_CREATE_FAILURE:
-      case ProductListActionTypes.PRODUCT_UPDATE_FAILURE:
+        // case ProductListActionTypes.PRODUCT_UPDATE_FAILURE:
         state.loading = false;
         state.error = action.payload;
         return state;

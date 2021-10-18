@@ -11,14 +11,28 @@ interface ProductProps {
 
 const Product: React.FC<ProductProps> = ({ product }) => {
   return (
-    <Card className="my-3 p-3 rounded">
+    <Card
+      className="my-3 p-3 rounded"
+      style={{ height: "22rem" }}
+      border="primary"
+      bg="primary"
+    >
       <Link href={`/product/${product.id}`}>
-        <Card.Img src={product.image} />
+        <Card.Img
+          className="product-image"
+          src={product.image}
+          variant="top"
+          style={{
+            height: "50%",
+            cursor: "pointer",
+            transition: "transform 1s",
+          }}
+        />
       </Link>
 
       <Card.Body>
         <Link href={`/product/${product.id}`}>
-          <Card.Title as="div">
+          <Card.Title as="div" style={{ color: "white" }}>
             <strong>{product.name}</strong>
           </Card.Title>
         </Link>

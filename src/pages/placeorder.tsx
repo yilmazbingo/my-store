@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Router from "next/router";
 import Link from "next/link";
 import { RootState } from "@/redux/rootReducer";
 import CheckoutSteps from "@/components/CheckoutSteps";
-import Loader from "@/components/Loader";
 import { orderCreateStart } from "@/redux/order-create/actions";
 import BaseLayout from "@/components/layout/BaseLayout";
 import BasePage from "@/components/layout/Basepage";
@@ -72,7 +71,6 @@ const PlaceOrder: React.FC<PlaceOrderProps> = ({}) => {
                   <strong>Shipping: </strong>
                   {cart?.shippingAddress?.address},{" "}
                   {cart?.shippingAddress?.city}
-                  {"  "}
                   {cart?.shippingAddress?.postalCode},{"  "}
                   {cart?.shippingAddress?.country}
                 </p>

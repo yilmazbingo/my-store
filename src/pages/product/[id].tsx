@@ -15,7 +15,6 @@ import {
 import Rating from "@/components/product/Rating";
 import BaseLayout from "@/components/layout/BaseLayout";
 import BasePage from "@/components/layout/Basepage";
-import products from "@/products";
 import { GetStaticProps } from "next";
 import { IProduct } from "@/types/interfaces";
 import ButtonLink from "@/components/links/ButtonLink";
@@ -30,6 +29,7 @@ import {
 interface ProductDetailProps {
   params: { id: string };
   product: IProduct;
+  error: string;
 }
 
 const Product: React.FC<ProductDetailProps> = ({ product, error }) => {
@@ -39,6 +39,10 @@ const Product: React.FC<ProductDetailProps> = ({ product, error }) => {
 
   const userState = useSelector((state: RootState) => state.user);
   const { userInfo } = userState;
+  // some returns boolean
+  const is_user_reviewed = product?.reviews?.some(
+    (review) => Number(review.user) == userInfo?.id
+  );
   const productReviewState = useSelector(
     (state: RootState) => state.productReview
   );
@@ -78,8 +82,9 @@ const Product: React.FC<ProductDetailProps> = ({ product, error }) => {
           <div>
             <Row>
               <Col md={6}>
-                <Image src={product.image} alt={product.name} fluid />
-              </Col>{" "}
+                <Image src={product.image} alt={product.name} fluid thumbnail />
+              </Col>
+
               <Col md={3}>
                 {/* variant=flush removes the border around List Group */}
                 <ListGroup variant="flush">
@@ -99,17 +104,17 @@ const Product: React.FC<ProductDetailProps> = ({ product, error }) => {
                   </ListGroup.Item>
                 </ListGroup>
               </Col>
+
               <Col md={3}>
                 <Card>
                   <ListGroup variant="flush">
                     <ListGroup.Item>
-                      {" "}
                       <Row>
                         <Col>Price:</Col>
                         <Col>
                           <strong>${product.price}</strong>
                         </Col>
-                      </Row>{" "}
+                      </Row>
                     </ListGroup.Item>
                   </ListGroup>
                   <ListGroup variant="flush">
@@ -170,14 +175,15 @@ const Product: React.FC<ProductDetailProps> = ({ product, error }) => {
                 )}
 
                 <ListGroup variant="flush">
-                  {product.reviews.map((review) => (
-                    <ListGroup.Item key={review.id}>
-                      <strong>{review.name}</strong>
-                      <Rating value={review.rating} color="#f8e825" />
-                      <p>{review.createdAt.substring(0, 10)}</p>
-                      <p>{review.comment}</p>
-                    </ListGroup.Item>
-                  ))}
+                  {product.reviews &&
+                    product.reviews.map((review) => (
+                      <ListGroup.Item key={review.id}>
+                        <strong>{review.name}</strong>
+                        <Rating value={review.rating} color="#f8e825" />
+                        <p>{review.createdAt.substring(0, 10)}</p>
+                        <p>{review.comment}</p>
+                      </ListGroup.Item>
+                    ))}
 
                   <ListGroup.Item>
                     <h4>Write a review</h4>
@@ -212,14 +218,14 @@ const Product: React.FC<ProductDetailProps> = ({ product, error }) => {
                           <Form.Label>Review</Form.Label>
                           <Form.Control
                             as="textarea"
-                            row={5}
+                            // row={5}
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
                           ></Form.Control>
                         </Form.Group>
 
                         <Button
-                          disabled={loadingProductReview}
+                          disabled={loadingProductReview || is_user_reviewed}
                           type="submit"
                           variant="primary"
                         >
@@ -247,10 +253,12 @@ export default Product;
 
 export const getStaticPaths = async () => {
   const response: AxiosResponse = await axios.get(
-    // `${process.env.DJANGO_API_URL!}/api/products`
-    `http://localhost:8000/api/products`
+    `${process.env.DJANGO_API_URL!}/api/products`
+    // `http://localhost:8000/api/products`
   );
-  const paths = response.data.map((product: IProduct) => {
+
+  console.log("process.env.DJANGO_API_URL", response.data);
+  const paths = response.data.products.map((product: IProduct) => {
     return {
       params: { id: product.id.toString() },
     };
@@ -267,7 +275,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       `${process.env.DJANGO_API_URL}/api/products/${context?.params?.id}`
     );
     return { props: { product: product.data }, revalidate: 1 };
-  } catch (e) {
+  } catch (e: any) {
     console.log("error in  /product/id", e);
     return { props: { error: e.message }, revalidate: 1 };
   }

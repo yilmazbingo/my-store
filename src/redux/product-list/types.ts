@@ -12,7 +12,7 @@ export interface IProductListState {
 }
 export interface IFetchProductsStart {
   type: ProductListActionTypes.PRODUCT_LIST_START;
-  payload: string;
+  payload?: string;
 }
 
 export interface IFetchProductSuccess {

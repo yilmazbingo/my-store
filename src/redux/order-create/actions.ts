@@ -5,12 +5,12 @@ import {
   OrderCreateFailure,
 } from "./types";
 
-export const orderCreateStart = (data): OrderCreateStart => ({
+export const orderCreateStart = (data: any): OrderCreateStart => ({
   type: OrderCreateActionTypes.ORDER_CREATE_START,
   payload: data,
 });
 
-export const orderCreateSuccess = (data): OrderCreateSuccess => ({
+export const orderCreateSuccess = (data: any): OrderCreateSuccess => ({
   type: OrderCreateActionTypes.ORDER_CREATE_SUCCESS,
   payload: data,
 });

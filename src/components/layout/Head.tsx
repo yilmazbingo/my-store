@@ -55,6 +55,11 @@ const HeadTags: React.FC<HeadProps> = (props) => {
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
       />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+        rel="stylesheet"
+      />
+
       <meta name="theme-color" content="#317EFB" />
       {/* <link rel="manifest" href="/manifest.json" /> */}
       <link

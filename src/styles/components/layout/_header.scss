@@ -1,0 +1,33 @@
+.navbar {
+  background-color: map-get($background-colors, navbar);
+  a {
+    color: map-get($text-colors, navbar) !important;
+  }
+  //   button {
+  //     color: map-get($text-colors, navbar_brand) !important;
+  //   }
+}
+
+.navbar__brand {
+  color: map-get($text-colors, navbar_brand);
+}
+
+.dropdown-menu {
+  &.show {
+    background-color: map-get($background-colors, dropdown-menu);
+    &:hover {
+      color: yellow;
+      background-color: rgb(37, 44, 59);
+    }
+    .dropdown-item {
+      color: map-get($text-colors, dropdown_menu_item);
+      &:hover {
+        color: yellow;
+        background-color: rgb(31, 23, 23);
+      }
+    }
+  }
+}
+.navbar__logout {
+  color: map-get($text-colors, navbar_logout);
+}

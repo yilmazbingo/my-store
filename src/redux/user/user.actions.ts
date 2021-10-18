@@ -32,27 +32,6 @@ export const userLogoutFailure = (error: any): types.IUserLogoutFailure => ({
   payload: error,
 });
 
-export const userRegisterStart = (
-  registerCredentials: types.RegisterCredentials
-): types.IUserRegisterStart => ({
-  type: UserActionTypes.USER_REGISTER_START,
-  payload: registerCredentials,
-});
-
-export const userRegisterSuccess = (
-  data: IUser
-): types.IUserRegisterSuccess => ({
-  type: UserActionTypes.USER_REGISTER_SUCCESS,
-  payload: data,
-});
-
-export const userRegisterFailure = (
-  error: any
-): types.IUserRegisterFailure => ({
-  type: UserActionTypes.USER_REGISTER_FAILURE,
-  payload: error,
-});
-
 export const userProfileUpdateStart = (
   updateCredentials: types.UpdateCredentials
 ): types.IUserProfileUpdateStart => ({

@@ -12,6 +12,7 @@ import ProductCarousel from "@/components/ProductCarousel";
 import { SagaStore } from "../redux/store";
 import { fetchProductsStart } from "@/redux/product-list/actions";
 import { IProductListState } from "@/redux/product-list/types";
+import Title from "@/components/Title";
 
 interface IndexProps {
   productListState: IProductListState;
@@ -21,14 +22,15 @@ const Index: React.FC<IndexProps> = ({ productListState }) => {
   // console.log("error in index", error);
   let keyword = Router.router?.query.keyword as string;
 
-  console.log("products", products);
+  console.log("keyword in index", keyword);
 
   return (
     <BaseLayout>
-      <BasePage header="Latest products">
+      <BasePage>
+        <Title title="Latest Products" color="rgb(6, 82, 6)" />
         {loading ? <Loader /> : ""}
         <Row>
-          <Col>{!keyword && <ProductCarousel />}</Col>
+          <Col>{<ProductCarousel />}</Col>
         </Row>
         <Row>
           {products &&
@@ -50,18 +52,16 @@ export default Index;
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
     const { store, query } = context;
-    console.log("params", query);
     if (!query.page) {
       query.page = "1";
     }
     if (!query.keyword) {
       query.keyword = "";
     }
-    console.log("Query in serverside", query.keyword);
+    console.log("query in serverSide", query);
     store.dispatch(
       fetchProductsStart(`keyword=${query["keyword"]}&page=${query["page"]}`)
     );
-
     store.dispatch(END);
     await (store as SagaStore).sagaTask.toPromise();
     const state = store.getState();

@@ -2,6 +2,7 @@ import produce from "immer";
 import { CartActionTypes } from "./cart.action.types";
 import { CartState, CartProduct } from "./types";
 import { Action } from "./cart.actions";
+import { IProduct } from "@/types/interfaces";
 
 // i have to initalize the value as null otherwise server error
 let shippingAddressFromStorage = null;
@@ -27,7 +28,11 @@ if (typeof window !== "undefined") {
 priceOfCartItemsFromStorage = cartItemsFromStorage
   ? Number(
       cartItemsFromStorage
-        .reduce((acc, item) => acc + Number(item.price) * Number(item.qty), 0)
+        .reduce(
+          (acc: number, item: IProduct) =>
+            acc + Number(item.price) * Number(item.qty),
+          0
+        )
         .toFixed(2)
     )
   : 0;

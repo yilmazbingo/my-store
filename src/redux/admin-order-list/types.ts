@@ -1,9 +1,24 @@
+import { IUser } from "@/types/interfaces";
 import { AdminOrderListTypes } from "./action.types";
+
+export interface IOrder {
+  id: number;
+  user: IUser;
+  paymentMethod: string;
+  taxPrice: number;
+  shippingPrice: number;
+  totalPrice: number;
+  isPaid: boolean;
+  paidAt: string;
+  isDelivered: boolean;
+  deliveredAt: string;
+  createdAt: string;
+}
 
 export interface IMyOrderListState {
   loading: boolean;
   error: any;
-  ordersList: any;
+  orders: IOrder[];
 }
 
 export interface IAdminOrderListRequestStartAction {

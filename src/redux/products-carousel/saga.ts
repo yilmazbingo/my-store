@@ -19,7 +19,7 @@ export function* carouselProductsStartAsync() {
       `${process.env.DJANGO_API_URL!}/api/products/top/`
     );
     yield put(carouselProductsRequestSuccess(data));
-  } catch (error) {
+  } catch (error: any) {
     yield put(carouselProductsRequestFailure(error.message));
   }
 }
