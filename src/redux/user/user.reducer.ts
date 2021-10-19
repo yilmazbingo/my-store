@@ -34,6 +34,7 @@ export const userLoginReducer = produce(
         }
         state.userInfo = user;
         return state;
+
       case UserActionTypes.USER_UPDATE_REQUEST_START:
       case UserActionTypes.USER_LOGIN_START:
         state.loading = true;

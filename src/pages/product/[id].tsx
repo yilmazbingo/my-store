@@ -257,7 +257,6 @@ export const getStaticPaths = async () => {
     // `http://localhost:8000/api/products`
   );
 
-  console.log("process.env.DJANGO_API_URL", response.data);
   const paths = response.data.products.map((product: IProduct) => {
     return {
       params: { id: product.id.toString() },

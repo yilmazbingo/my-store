@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { Pagination } from "react-bootstrap";
 import Link from "next/link";
 
@@ -15,9 +15,9 @@ const Paginate = ({
   keyword = "",
   isAdmin = false,
 }: PaginateProps) => {
-  if (keyword) {
-    keyword = keyword.split("?keyword=")[1].split("&")[0];
-  }
+  // if (keyword) {
+  //   keyword = keyword.split("?keyword=")[1].split("&")[0];
+  // }
 
   return pages > 1 ? (
     <Pagination>

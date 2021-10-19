@@ -23,7 +23,6 @@ const userList: React.FC<userListProps> = ({}) => {
   const { loading, error, userList: users } = userListState;
   const userState = useSelector((state: RootState) => state.user);
   const { userInfo } = userState;
-  console.log("userinfo", userInfo);
 
   //   const userDelete = useSelector((state) => state.userDelete);
   //   const { success: successDelete } = userDelete;

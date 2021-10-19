@@ -31,10 +31,8 @@ function* productReviewStartAsync(action: IProductReviewRequest) {
       action.payload.data,
       config
     );
-    console.log("data of axios psot review", data);
-    console.log("before review success");
+
     yield put(productReviewSuccess());
-    console.log("after review success");
     Router.reload();
   } catch (error: any) {
     yield put(productReviewFailure(error.message));

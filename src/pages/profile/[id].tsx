@@ -38,7 +38,6 @@ const UserDetail: React.FC = () => {
     error: errorOrders,
     ordersList,
   } = ordersListState;
-  console.log("orders in lis", ordersList);
   const { error, loading, user } = userDetails;
 
   const dispatch = useDispatch();

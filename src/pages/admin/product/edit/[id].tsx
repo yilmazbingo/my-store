@@ -17,6 +17,7 @@ import { productUpdateStart } from "@/redux/product-update/action.creators";
 import { IProductState } from "@/redux/product-fetch/types";
 import { productFetchStart } from "@/redux/product-fetch/action.creators";
 import { RootState } from "@/redux/rootReducer";
+import ButtonLink from "@/components/links/ButtonLink";
 
 function ProductEditScreen({
   productId,
@@ -100,7 +101,11 @@ function ProductEditScreen({
   return (
     <BaseLayout>
       <BasePage>
-        <Link href="/admin/productlist">Go Back</Link>
+        <ButtonLink
+          title="Go Back"
+          href="/"
+          className="btn btn-light my-3"
+        ></ButtonLink>
 
         <FormContainer>
           <h1>Edit Product</h1>
@@ -208,7 +213,6 @@ export default ProductEditScreen;
 export const getServerSideProps: GetServerSideProps =
   wrapper.getServerSideProps(async (context) => {
     const { store, params } = context;
-    console.log("paramssssssssssss", params);
     store.dispatch(productFetchStart(params?.id as string));
     store.dispatch(END);
     await (store as SagaStore).sagaTask.toPromise();

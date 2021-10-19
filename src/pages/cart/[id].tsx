@@ -15,13 +15,17 @@ import {
 } from "react-bootstrap";
 import Message from "@/components/Message";
 import { addToCart, removeFromCart } from "@/redux/cart/cart.actions";
+import { wrapper, SagaStore } from "@/redux/store";
 import { useRouter } from "next/router";
+import { END } from "redux-saga";
 import { GetServerSideProps } from "next";
 import { RootState } from "@/redux/rootReducer";
 import BaseLayout from "@/components/layout/BaseLayout";
 import BasePage from "@/components/layout/Basepage";
+import { CartState } from "@/redux/cart/types";
 
 interface CartProps {
+  cartProductsState?: CartState;
   paramsId: string;
 }
 
@@ -32,8 +36,10 @@ const Cart: React.FC<CartProps> = (props) => {
   //   console.log("qty", qty); { qty: '3', id: '1' }
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart);
+  // const cart = props.cartProductsState;
+
   const { cartItems } = cart;
-  console.log("CartItems in cart/id", cartItems);
+  console.log("CartItems in cart/id", cart);
   useEffect(() => {
     if (paramsId) {
       dispatch(addToCart(+paramsId, qty));
@@ -148,13 +154,12 @@ const Cart: React.FC<CartProps> = (props) => {
 export default Cart;
 
 // export const getStaticPaths = async () => {
-
 //   const productId = router.query;
 
 //   return { paths, fallback: true };
 // };
 
-//   // params is passe here
+// // params is passe here
 // export const getStaticProps: GetStaticProps = async (context) => {
 //   return { props: { product: context?.params?.id }, revalidate: 1 };
 // };
@@ -162,3 +167,21 @@ export default Cart;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { paramsId: context?.params?.id } };
 };
+
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   async (context) => {
+//     const { store, query } = context;
+//     console.log("query", query);
+//     const qty = query.qty as string;
+//     const id = query.id as string;
+//     console.log("qty:", qty, "id", id);
+//     store.dispatch(addToCart(+id, +qty));
+//     store.dispatch(END);
+//     await (store as SagaStore).sagaTask.toPromise();
+//     const state = store.getState();
+//     console.log("cartProductsSata", state.cart);
+
+//     const cartProductsState = state.cart ? state.cart : null;
+//     return { props: { cartProductsState } };
+//   }
+// );

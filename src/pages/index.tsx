@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Router from "next/router";
 import { Row, Col } from "react-bootstrap";
-import { wrapper } from "@/redux/store";
+import { wrapper, SagaStore } from "@/redux/store";
 import { END } from "redux-saga";
 import BaseLayout from "@/components/layout/BaseLayout";
 import BasePage from "@/components/layout/Basepage";
@@ -9,7 +9,7 @@ import Product from "@/components/product/Product";
 import Paginate from "@/components/Paginate";
 import Loader from "@/components/Loader";
 import ProductCarousel from "@/components/ProductCarousel";
-import { SagaStore } from "../redux/store";
+// import { SagaStore } from "../redux/store";
 import { fetchProductsStart } from "@/redux/product-list/actions";
 import { IProductListState } from "@/redux/product-list/types";
 import Title from "@/components/Title";
@@ -58,7 +58,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     if (!query.keyword) {
       query.keyword = "";
     }
-    console.log("query in serverSide", query);
     store.dispatch(
       fetchProductsStart(`keyword=${query["keyword"]}&page=${query["page"]}`)
     );

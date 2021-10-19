@@ -25,7 +25,6 @@ const Order: React.FC<OrderProps> = ({ paramsId }) => {
   const { orderPaid, loading: loadingPay } = orderPayState;
 
   const { orderDetail, error, loading } = orderDetailState;
-  console.log("orderDetail", orderDetail);
   const userState = useSelector((state: RootState) => state.user);
   const { userInfo } = userState;
 

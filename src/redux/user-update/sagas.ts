@@ -14,7 +14,6 @@ function* userUpdateStart() {
 }
 
 function* userUpdateStartAsync(action: IUserUpdateRequestStart) {
-  console.log("Action in update", action);
   try {
     const getState = (state: RootState) => state.user;
     const { userInfo } = yield select(getState);
