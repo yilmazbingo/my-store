@@ -42,7 +42,9 @@ const register: React.FC<registerProps> = () => {
         <FormContainer>
           <h1>Register</h1>
           {message && <Message variant="danger">{message}</Message>}
-          {error && <Message variant="danger">{error}</Message>}
+          {error && error.includes("400") && (
+            <Message variant="danger"> "Email Exists" </Message>
+          )}
           {loading && <Loader />}
           <Form onSubmit={submitHandler}>
             <FormGroup controlId="name">
