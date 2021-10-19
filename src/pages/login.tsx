@@ -40,7 +40,9 @@ const login: React.FC<loginProps> = ({ query }) => {
       <BasePage>
         <FormContainer>
           <h1>Sign In</h1>
-          {error && <Message variant="danger">{error.message}</Message>}
+          {error && error.message.includes("401") && (
+            <Message variant="danger">Wrong Email or Password</Message>
+          )}
           {loading && <Loader />}
           <Form onSubmit={submitHandler}>
             <FormGroup controlId="email">
