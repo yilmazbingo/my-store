@@ -6,7 +6,7 @@
     "dev": "next dev -p 4500",
     "build": "next build",
     "start": "next start",
-    "push": "git add . && git commit -m \" Bug Fix\" && git push"
+    "push": "git add . && git commit -m \" Bug Fix\" && git push -u origin master"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
