@@ -53,6 +53,7 @@ export function* onStartSignin(action: StartSignInAction) {
     );
     yield put(userLoginSuccess(data));
     localStorage.setItem("userInfo", JSON.stringify(data));
+    Router.push("/");
   } catch (e) {
     console.log("error in loging", e);
     yield put(userLoginFailure(e));

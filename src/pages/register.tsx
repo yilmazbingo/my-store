@@ -30,6 +30,8 @@ const register: React.FC<registerProps> = () => {
 
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
+    setMessage("");
+
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
     } else {
@@ -43,7 +45,7 @@ const register: React.FC<registerProps> = () => {
           <h1>Register</h1>
           {message && <Message variant="danger">{message}</Message>}
           {error && error.includes("400") && (
-            <Message variant="danger"> "Email Exists" </Message>
+            <Message variant="danger"> Email Exists </Message>
           )}
           {loading && <Loader />}
           <Form onSubmit={submitHandler}>

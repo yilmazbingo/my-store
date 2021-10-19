@@ -9,7 +9,10 @@ function SearchBox() {
   const submitHandler = (event: FormEvent) => {
     event.preventDefault();
     if (keyword) {
-      Router.push({ pathname: "", query: { keyword: keyword, page: 1 } });
+      Router.push({
+        pathname: process.env.BASE_URL,
+        query: { keyword: keyword, page: 1 },
+      });
     } else if (keyword === "") {
       Router.push({ pathname: "", query: { page: 1 } });
     } else {
